@@ -1,11 +1,11 @@
-var express = require('express');
-var passport = require('passport');
-var util = require('util');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var GitHubStrategy = require('passport-github2').Strategy;
-var partials = require('express-partials');
+var express = require('express'),
+    passport = require('passport'),
+    util = require('util'),
+    session = require('express-session'),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+    GitHubStrategy = require('passport-github2').Strategy,
+    partials = require('express-partials');
 
 
 var GITHUB_CLIENT_ID = "--insert-github-client-id-here--";
@@ -39,7 +39,7 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
-    process.nextTick(function () {
+    process.nextTick(function() {
       
       // To keep the example simple, the user's GitHub profile is returned to
       // represent the logged-in user.  In a typical application, you would want
@@ -70,15 +70,15 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.render('index', { user: req.user });
 });
 
-app.get('/account', ensureAuthenticated, function(req, res){
+app.get('/account', ensureAuthenticated, function(req, res) {
   res.render('account', { user: req.user });
 });
 
-app.get('/login', function(req, res){
+app.get('/login', function(req, res) {
   res.render('login', { user: req.user });
 });
 
@@ -89,7 +89,7 @@ app.get('/login', function(req, res){
 //   back to this application at /auth/github/callback
 app.get('/auth/github',
   passport.authenticate('github', { scope: [ 'user:email' ] }),
-  function(req, res){
+  function(req, res) {
     // The request will be redirected to GitHub for authentication, so this
     // function will not be called.
   });
@@ -105,7 +105,7 @@ app.get('/auth/github/callback',
     res.redirect('/');
   });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
